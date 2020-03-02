@@ -963,6 +963,7 @@ void sha512_Raw(const sha2_byte* data, size_t len, uint8_t digest[SHA512_DIGEST_
     sha512_Final(digest, &context);
 }
 
+#if 0
 void hmac_sha256(const uint8_t* key, const uint32_t keylen, const uint8_t* msg, const uint32_t msglen, uint8_t* hmac)
 {
     int i;
@@ -993,6 +994,7 @@ void hmac_sha256(const uint8_t* key, const uint32_t keylen, const uint8_t* msg, 
     sha256_Final(hmac, &ctx);
 }
 
+#endif
 void hmac_sha512(const uint8_t* key, const uint32_t keylen, const uint8_t* msg, const uint32_t msglen, uint8_t* hmac)
 {
     int i;
