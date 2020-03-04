@@ -96,7 +96,8 @@ btc_bool btc_hdnode_from_seed(const uint8_t* seed, int seed_len, btc_hdnode* out
     out->depth = 0;
     out->fingerprint = 0x00000000;
     out->child_num = 0;
-    hmac_sha512((const uint8_t*)"Bitcoin seed", 12, seed, seed_len, I);
+    assert( 0 );  // Don't use any function that uses this function. This was a lazy move.
+    //hmac_sha512((const uint8_t*)"Bitcoin seed", 12, seed, seed_len, I);
     memcpy(out->private_key, I, BTC_ECKEY_PKEY_LENGTH);
 
     if (!btc_ecc_verify_privatekey(out->private_key)) {
@@ -131,7 +132,8 @@ btc_bool btc_hdnode_public_ckd(btc_hdnode* inout, uint32_t i)
     memset(inout->private_key, 0, 32);
 
     int failed = 0;
-    hmac_sha512(inout->chain_code, 32, data, sizeof(data), I);
+    assert( 0 );  // Don't use any function that uses this function. This was a lazy move.
+    //hmac_sha512(inout->chain_code, 32, data, sizeof(data), I);
     memcpy(inout->chain_code, I + 32, BTC_BIP32_CHAINCODE_SIZE);
 
 
@@ -175,7 +177,8 @@ btc_bool btc_hdnode_private_ckd(btc_hdnode* inout, uint32_t i)
     memset(fingerprint, 0, sizeof(fingerprint));
     memcpy(p, inout->private_key, BTC_ECKEY_PKEY_LENGTH);
 
-    hmac_sha512(inout->chain_code, BTC_BIP32_CHAINCODE_SIZE, data, sizeof(data), I);
+    assert( 0 );  // Don't use any function that uses this function. This was a lazy move.
+    //hmac_sha512(inout->chain_code, BTC_BIP32_CHAINCODE_SIZE, data, sizeof(data), I);
     memcpy(inout->chain_code, I + BTC_ECKEY_PKEY_LENGTH, BTC_BIP32_CHAINCODE_SIZE);
     memcpy(inout->private_key, I, BTC_ECKEY_PKEY_LENGTH);
 

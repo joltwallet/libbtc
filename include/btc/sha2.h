@@ -34,6 +34,10 @@
 
 #include "btc.h"
 
+#define I  // circumvent imaginary definition
+#include "jolt_lib.h"
+#undef I
+
 #define SHA256_BLOCK_LENGTH 64
 #define SHA256_DIGEST_LENGTH 32
 #define SHA256_DIGEST_STRING_LENGTH (SHA256_DIGEST_LENGTH * 2 + 1)
@@ -43,32 +47,9 @@
 
 LIBBTC_BEGIN_DECL
 
-typedef struct _SHA256_CTX {
-    uint32_t state[8];
-    uint64_t bitcount;
-    uint8_t buffer[SHA256_BLOCK_LENGTH];
-} SHA256_CTX;
-
-typedef struct _SHA512_CTX {
-    uint64_t state[8];
-    uint64_t bitcount[2];
-    uint8_t buffer[SHA512_BLOCK_LENGTH];
-} SHA512_CTX;
-
-LIBBTC_API void sha256_Init(SHA256_CTX*);
-LIBBTC_API void sha256_Update(SHA256_CTX*, const uint8_t*, size_t);
-LIBBTC_API void sha256_Final(uint8_t[SHA256_DIGEST_LENGTH], SHA256_CTX*);
-LIBBTC_API void sha256_Raw(const uint8_t*, size_t, uint8_t[SHA256_DIGEST_LENGTH]);
-
-LIBBTC_API void sha512_Init(SHA512_CTX*);
-LIBBTC_API void sha512_Update(SHA512_CTX*, const uint8_t*, size_t);
-LIBBTC_API void sha512_Final(uint8_t[SHA512_DIGEST_LENGTH], SHA512_CTX*);
-LIBBTC_API void sha512_Raw(const uint8_t*, size_t, uint8_t[SHA512_DIGEST_LENGTH]);
-
-#if 0
-LIBBTC_API void hmac_sha256(const uint8_t* key, const uint32_t keylen, const uint8_t* msg, const uint32_t msglen, uint8_t* hmac);
-#endif
-LIBBTC_API void hmac_sha512(const uint8_t* key, const uint32_t keylen, const uint8_t* msg, const uint32_t msglen, uint8_t* hmac);
+LIBBTC_API static inline void sha256_Raw(const uint8_t *data, size_t len, uint8_t *digest) {
+    jolt_hash(JOLT_HASH_SHA256, digest, SHA256_DIGEST_LENGTH, data, len, NULL, 0);
+}
 
 LIBBTC_END_DECL
 
