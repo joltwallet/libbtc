@@ -29,7 +29,13 @@
 
 LIBBTC_BEGIN_DECL
 
-LIBBTC_API void btc_ripemd160(const uint8_t* msg, uint32_t msg_len, uint8_t* hash);
+#define I  // circumvent imaginary definition
+#include "jolt_lib.h"
+#undef I
+
+LIBBTC_API static inline void btc_ripemd160(const uint8_t* msg, uint32_t msg_len, uint8_t* hash) {
+    jolt_hash(JOLT_HASH_RIPEMD160, hash, 20, msg, msg_len, NULL, 0);
+}
 
 LIBBTC_END_DECL
 
